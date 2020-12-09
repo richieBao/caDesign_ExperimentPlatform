@@ -4,7 +4,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config: #用类的方式存储配置变量有助于后续扩展
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string' #flask及扩展将SECRET_KEY配置变量作为加密密钥，用于生成签名或令牌。程序会先从环境变量中查找 SECRET_KEY， 如果没有，就会使用后面的硬编码字符串。
 
-
     MAIL_DEBUG=os.environ.get('MAIL_DEBUG', True)
     MAIL_SUPPRESS_SEND=os.environ.get('MAIL_SUPPRESS_SEND', False)
     MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL', True)  # 重要，qq邮箱需要使用SSL
@@ -12,12 +11,11 @@ class Config: #用类的方式存储配置变量有助于后续扩展
 
     MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.qq.com')
     MAIL_PORT = int(os.environ.get('MAIL_PORT', '465'))
-    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', False)  #MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'false').lower() in ['true', 'on', '1']
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', False)
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME','1310555375@qq.com')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD','mcjhykfeslacfeec')
     FLASKY_MAIL_SUBJECT_PREFIX = '[caDesign Experiment Platform]'
-    FLASKY_MAIL_SENDER = 'caDesign Experiment Platform <1310555375@qq.com>' #FLASKY_MAIL_SENDER = 'caDesign_Experiment Admin <1310555375@qq.com>'
-
+    FLASKY_MAIL_SENDER = 'caDesign Experiment Platform <1310555375@qq.com>'
 
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
     SSL_REDIRECT = False
