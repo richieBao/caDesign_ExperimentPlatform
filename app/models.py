@@ -330,3 +330,30 @@ class Comment(db.Model):
             tags=allowed_tags, strip=True))
 
 db.event.listen(Comment.body, 'set', Comment.on_changed_body)
+
+class vp_imgs(db.Model):
+    __tablename__ = 'vp_imgs'
+    index=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    imgs_fp=db.Column(db.Text,unique=True,nullable=False)
+    lat=db.Column(db.Float)
+    lon=db.Column(db.Float)
+    alt=db.Column(db.Float)
+    vp_classification=db.relationship('vp_classification',uselist=False, back_populates="vp_imgs")
+
+class vp_classification(db.Model):
+    __tablename__ = 'vp_classification'
+    id=db.Column(db.Integer,primary_key=True,autoincrement=True)
+    imgs_fp=db.Column(db.Text,unique=True,nullable=False)
+    c_1 = db.Column(db.Integer)
+    c_2 = db.Column(db.Integer)
+    c_3 = db.Column(db.Integer)
+    c_4 = db.Column(db.Integer)
+    c_5 = db.Column(db.Integer)
+    c_6 = db.Column(db.Integer)
+    c_7 = db.Column(db.Integer)
+    c_8 = db.Column(db.Integer)
+    classification=db.Column(db.Text)
+    timestamp=db.Column(db.DateTime,default=datetime.now)
+    #index = db.Column(db.Integer)
+    index=db.Column(db.Integer,db.ForeignKey('vp_imgs.index'))
+    vp_imgs=db.relationship('vp_imgs',back_populates="vp_classification")

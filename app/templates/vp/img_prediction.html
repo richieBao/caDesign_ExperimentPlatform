@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}caDesign - visual perception{% endblock %}
+
+{% block page_content %}
+    <div class="jumbotron">
+        <h3>预测图像分类</h3>
+
+        <p>
+            通过'参与图像分类'获取训练数据集（798幅图像）;--->应用Start特征检测器和SIFT尺度不变特征变换提取图像关键点描述子;--->聚类图像描述子建立视觉词袋(BOW);
+            --->提取图像特征映射，建立训练数据集特征向量;--->极端随机森林(extremely randomized trees, Extra-Tress)训练分类估计器，建立图像分类器;--->应用估计器构建图像识别器。
+        </p>
+
+        <p>
+            <a class="btn btn-secondary btn-lg" href="{{ url_for('visual_perception.vp') }}" role="button">实验主页</a>
+            &nbsp<a class="btn btn-primary btn-lg" href="{{ url_for('visual_perception.imgs_classification') }}" role="button">参与图像分类</a>
+            &nbsp<a class="btn btn-primary btn-lg" href="{{ url_for('visual_perception.vp') }}" role="button">空间类型分布/待</a>
+        </p>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+         {{ form.hidden_tag() }}
+         {{ form.photo }}
+         {% for error in form.photo.errors %}
+             <span style="color: red;">{{ error }}</span>
+         {% endfor %}
+         {{ form.submit }}
+    </form>
+
+    {% if img_url %}
+        <br>
+        <div class="thumbnail">
+            <img src="{{ img_url }}" >
+            <div class="caption">
+                <h4>预测结果：{{ imgs_pred_tag }}</h4>
+                <p>[林荫,窄建,窄木,宽建,宽木,阔建,阔木,开阔] </p>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}caDesign - visual perception{% endblock %}
+
+{% block page_content %}
+    <div class="jumbotron">
+        <h1>视觉感知-基于图像的空间分类</h1>
+        <p>
+            计算机视觉的发展应用邻域日益广泛，例如机器人、无人驾驶、文档分析、医疗诊断等智能自主系统。其在规划设计领域的作用也日益凸显，
+            尤其百度、Google的街景图像，以及无人驾驶项目带来的大量序列图像和社交网络的图像，都推动着计算机视觉在规划领域潜在的应用前景。
+            视觉感知部分包括系列实验，例如基于图像的空间分类与城市空间类别分布、图像分割下空间分类识别、视觉评价、绿量研究，以及遥感影像用地类型
+            解译及依据标准的空间生成等内容。
+        </p>
+        <p>
+            基于图像的空间分类，方法一是应用Star、SIFT提取特征点（关键点）和描述子，聚类(K-Means)图像特征，进而建立视觉词袋（bag-of-words,BOW）。
+            BOW作为特征向量，输入到图像分类器（例如应用Extremely randomized trees, Extra-Trees/ET）进行训练。训练好的模型作为图像识别器
+            预测新的图像，并应用到更广泛的城市区域内，通过预测的空间分类研究城市类别分布。这个基于图像分类的空间类型可以根据不同的目的进行分类，例如
+            研究城市空间地面视野的郁密度，空间的开合程度，可以分类有林荫道、窄巷（步行为主）多建筑、窄巷有林木、宽道（1-2条）多建筑、宽道多林木、
+            干道（大于3条，4条居多）多建筑、干道多林木、干道开阔等。方法二是，并不计算图像特征，而是直接应用深度学习()的方法训练模型。
+        </p>
+        <p>
+            如果将多项视觉感知的子项研究综合起来，以及结合非视觉感知类的分析技术，能够进一步拓展城市空间类型或感知的研究范畴。
+        </p>
+
+        <p>
+            <a class="btn btn-primary btn-lg" href="{{ url_for('visual_perception.imgs_classification') }}" role="button">参与图像分类</a>
+            &nbsp<a class="btn btn-primary btn-lg" href="{{ url_for('visual_perception.img_prediction') }}" role="button">预测图像分类</a>
+            &nbsp<a class="btn btn-primary btn-lg" href="{{ url_for('visual_perception.vp') }}" role="button">空间类型分布/待</a>
+        </p>
+        <p>本地时间：{{ moment(current_time).format('LLL') }}</p>
+        <p>{{ moment(current_time).fromNow(refresh=True) }}</p>
+    </div>
+{% endblock %}
+

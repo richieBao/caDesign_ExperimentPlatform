@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}caDesign - visual perception{% endblock %}
+
+{% block page_content %}
+
+    <div class="jumbotron">
+        <h3>参与图像分类</h3>
+        <p>
+            将街道空间划分为：1-林荫道、2-窄巷（步行为主）多建筑、3-窄巷有林木、4-宽道（1-2条）多建筑、5-宽道多林木、 6-干（阔）道（大于3条，4条居多）多建筑、7-干（阔）道多林木、8-干（阔）道开阔。
+            分别标识为：林荫、窄建、窄木、宽建、宽木、阔建、阔木，及开阔，总共8类。
+        </p>
+
+        <h6>@ARTICLE{Geiger2013IJRR, author = {Andreas Geiger and Philip Lenz and Christoph Stiller and Raquel Urtasun}, title = {Vision meets Robotics: The KITTI Dataset}, journal = {International Journal of Robotics Research (IJRR)}, year = {2013} }</h6>
+
+        <p>
+            <a class="btn btn-secondary btn-lg" href="{{ url_for('visual_perception.vp') }}" role="button">实验主页</a>
+            &nbsp<a class="btn btn-primary btn-lg" href="{{ url_for('visual_perception.img_prediction') }}" role="button">预测图像分类</a>
+            &nbsp<a class="btn btn-primary btn-lg" href="{{ url_for('visual_perception.vp') }}" role="button">空间类型分布/待</a>
+        </p>
+    </div>
+
+    <ul class="question-list-group">
+        {% for img_info in imgs_info %}
+            <li style="float:left">
+                <div class="row">
+                    <div class=" col-md-10">
+                        <div class="thumbnail">
+                            <img src="{{ url_for('static',filename=img_info.imgs_fp) }}" alt="">
+                            <div class="caption">
+                                <h4>ID：{{ img_info.index }}
+                                    {{ img_info.vp_classification.classification}}
+                                </h4>
+                                        <iframe name="formDestination" class="iframe", style="display:none;"></iframe>
+                                        <form action="" method="post" target="formDestination">
+                                        <input type="radio" name="classi" value="1"/>林荫&nbsp
+                                        <input type="radio" name="classi" value="2"/>窄建&nbsp
+                                        <input type="radio" name="classi" value="3"/>窄木&nbsp
+                                        <input type="radio" name="classi" value="4"/>宽建&nbsp
+                                        <input type="radio" name="classi" value="5"/>宽木&nbsp
+                                        <input type="radio" name="classi" value="6"/>阔建&nbsp
+                                        <input type="radio" name="classi" value="7"/>阔木&nbsp
+                                        <input type="radio" name="classi" value="8"/>开阔&nbsp
+
+                                        <input type="hidden" name="img_index" value="{{img_info.index }}">
+                                        <input type="hidden" name="img_fp" value="{{ img_info.imgs_fp}}">
+
+                                        <input type="submit" value="提交" class="btn btn-secondary btn-sm" onClick="this.form.submit(); this.disabled=true; this.value='已提交'; ">
+                                   </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, 'visual_perception.imgs_classification') }}
+</div>
+{% endif %}
+
+{% endblock %}
+
